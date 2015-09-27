@@ -1,0 +1,11 @@
+==== Solution Analylsis
+
+The number of N can be large but the number of dominoes can be small. Instead of storing the dominoes in an array, the solution uses tree maps to record the positions, heights and cascade distances. This saves space on one hand and improves the performance by considering only positions with dominoes. For the right cascade positions, the idea is to compute from right to left by considering the cascade distances of those dominoes covered by the current domino to push. Clearly, the cascade distance of the current domino would be the maximum of its height and the absolute difference between the furthest cascade and its position. The left cascade distances are computed in a reverse way. After the distances are computed, simply output the distances with zeros to fill the gaps between dominoes.
+
+==== Time Complexity
+
+The tree map to store the dominoes may take O(NlogN) in the worst case if the number of dominoes is close to N since it is sorted. However, it finds the dominoes covered by the current pushed domino in O(logN). The number of iterations in the algorithm equals to the number of dominoes which is O(N). Therefore, the overall time complexity is O(NlogN). Alternatively, since the input dominoes are in oder, a list of tuples that store both the position and height may be used instead and the time complexity would be O(N). Considering the actual number of dominoes is usually less than N, the read-to-use tree map is adopted in the solution. 
+
+==== Space Complexity
+
+The space complexity is O(N) for the tree map to store the positions, heights and cascade distances of the dominoes in the worst case. However, when the actual number of dominoes is small, the real space usage is efficient.

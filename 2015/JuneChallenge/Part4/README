@@ -1,0 +1,25 @@
+Analytics System Design
+
+1. Users may be managed by geographically close servers for load balancing.
+2. The per user spell list may be popped up in the order of use frequencies, average damage per use and average number of minions killed per use and so on. The display is efficient regardless of the number of minions since it is per use basis and the user is able to specify the criteria for the order. 
+3. Some users may be grouped to explore a particular area where the minions show up continuously. The area maps, minions, textures and physical effects can be installed and computed on the client side to improve the performance by only transmitting and synchronizing positions of the players, minions and other movable objects across users via servers.
+4. Spell and normal attacks to minions and attacks from minions should be serialized to take effect sequentially such that the statuses and HPs of users and minions are updated consistently. For fast synchronization, users in the same server or geographical area may communicate with each other in a peer-to-peer protocol to increase the responsiveness and reduce the server load.
+5. Both users and servers may fail. The user status should be check-pointed and synchronized with the server periodically. The local checkpointing is for fast recovery while synchronization with the servers allows users to play on different machines.
+
+Parallel Solution
+
+Traditional cloud computing infrastructures such as the MapReduce may be used for the parallel solution.
+1. The dominoes can be segmented to compute the cascade distances respectively on different machines in parallel.
+2. The right cascade distances and left cascade distances can be computed for each segment in parallel.
+3. The segmented cascade distances need to be merged in the original order and can be done asynchronously. Te segment machine requests other machines with dominoes covered by the pushed dominoes on the machine for cascade distances. If the requested machine is not done, the request is delayed. The process converges from the rightmost segment to the leftmost segment for computing the right cascade distances. The left cascade distances converges similarly.
+
+Feedback
+
+Like
+1. Clear and simple examples to demonstrate the input and output
+2. Up-to-date language support
+3. Fast responses to answer questions
+
+To improve
+4. More well-defined input
+5. More complex test cases

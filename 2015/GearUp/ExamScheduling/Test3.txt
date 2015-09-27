@@ -1,0 +1,15 @@
+40 13
+Monday 8:00-10:00, Monday 12:00-15:00, Tuesday 9:00-11:00, Tuesday 11:30-16:00, Wednesday 14:00-15:46
+Tuesday 14:30-16:30, Wednesday 8:00-20:00, Friday 13:00-14:00
+Wednesday 14:06-16:08
+Monday 9:00-14:00, Thursday 9:00-14:00
+Monday 8:00-10:00, Monday 12:00-15:00, Tuesday 9:00-11:00, Tuesday 11:30-16:00, Wednesday 10:00-15:46
+Tuesday 14:30-16:30, Wednesday 8:00-20:00, Friday 13:00-14:00
+Tuesday 11:00-15:00, Thursday 10:00-12:31
+Monday 9:00-14:00
+Wednesday 8:00-20:00, Friday 8:00-20:00
+Monday 8:00-10:00, Monday 12:00-15:00, Tuesday 9:00-11:00, Tuesday 11:30-16:00, Wednesday 10:00-15:46
+Wednesday 14:06-16:08
+Tuesday 11:00-15:00, Thursday 10:00-12:31
+Monday 9:00-14:00
+8

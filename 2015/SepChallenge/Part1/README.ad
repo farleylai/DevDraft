@@ -1,0 +1,88 @@
+== Solution Analysis
+
+The problem is defined to find the minimun threat level given a sequence of blocks with respective threat levels and available forces to deploy.
+To find the optimal solution, the algorithm searches for different forces deployment configurations block by block until the ending block.
+At each block, a different forces deployment decision essentially branches into a subproblem as the originial one with the carried threat levels from
+previous blocks. The original problem can be viewed as carrying zero threat levels at block 0. Therefore, the search
+space is a tree with a branching factor P+1 because at each block, either one available force is deployed or none and
+there are P different forces. Though the tree height is O(B) but with P+1 > 1, the number of tree leaves is O((P+1)^B),
+implying potentially exponential search space size. Nonetheless, some the tree nodes at the same level are overlapped,
+suggesting a dynamic programming approach to solving distinct subproblems while branching and bounding intersected search
+paths. Clearly, the algorithm has efficiently by comparing subproblem configurations at the same block. 
+To be specific, a deployment configuration is defined as follows.
+
+- block: the block index
+- forces: a list of numbers representing the available forces per force type
+- threats: the carried threat levels from the previous blocks
+
+Apparently, with the same available forces at a given block, a search path with lower carried threats should prune
+search paths with higher carried threats. However, it may not be trivial to prune different forces configurations since
+the carried threat levels and the remaining available forces are interdependent. It is possible in the optimal search
+path, the configuration carrying more threats is selected and should not be pruned by the others. That is, different
+force configurations need to be compared efficiently wiht their carried threats. To address this issue, the forces are
+hashed to their coverage range ordering. The sum of the number of forces for each type is the lower bound of the
+coverage meaning each force only covers one block has threats. The upper bound of the coverage is the weighted sum of
+the number of forces for each type multiplied by their respective patrol lengths. Given the lower and upper bounds of
+the forces coverage, a forces configuration can be hashed to a lexical ordering of the coverage. The higher coverage
+rank, the more carried threats since fewers forces are deployed in the previous blocks. Similarly, a forces
+configuration with a lower coverage rank is supposed to carry fewer threats because more forces are deployed previously.
+For example, assume the inital configuration has two force types with patrol lengths 1 and 3. Each has 4 forces.
+After four blocks, say, one search path deploys two forces of patrol length 1 and the other uses one force of patrol length 1
+and one force of patrol length 3. Suppose the carried threats are A1 and A2. The lower and upper bounds of coverage of
+the first search path are between 2+4=6 and 1x2+3x4=14, resulting a coverage rank 6x10+14=74. In the same way, the
+coverage rank of the second search path is by hashing the lower and upper bounds 3+3=6 and 1x3+3x3=12 to a rank of
+6x10+12=72, implying the latter should carry no more threats than the former, namely, A1 >= A2. If A2 > A1, the
+corresponding search path is pruned to reduce the computation.
+
+On the other hand, though the number of possible forces configurations is constant in O((F/P+1)^P) number of forces of
+a particular type, for P=3 and F/P=100/3, the number of forces configurations can be up to 27000 or more.
+In practice, only a subset of the configurations are encountered at each block depending on the search path and some of 
+them are even overlapped. The storage data structure should not allocate the maximum space (O(B(F/P+1)^P)) for exhaustive search.
+Instead, only store the encountered configurations using a map structure of size up to the pruned search tree.
+
+A recursive search algorithm is simple to code but on a large input, it is likely to cause stack overflow due to the
+exponential search space. Hence, the submitted version is iterative and traverses the search tree using a stack. The
+procedure is as follows.
+
+[source]
+--
+. Read B, T, P, and F from stdin where F is a map from patrol length to force numbers
+. Push the initial configuration (block=0, forces=F.values(), threats=0) to a stack
+. while(!stack.isEmpty())
+.. Pop a configuration from the stack 
+.. Prune the configuration in terms of the coverage rank and the carried threats
+.. If not pruned, push the next configurations at the advanced block to the stack for each possible deployment of force types
+. Return and print the final minimum carried threat levels at B~th~ block
+--
+
+=== Optimizations
+
+There are several optimizations accelerating the pruning used as follows.
+
+- Triming leading and trailing zero threat blocks which does not change the optimality
+- Consecutive zero threat blocks are skipped
+- The configuration to compare with is binary searched in an ordered map
+- Compare with the results of the previous complete search paths to prune early
+- If the maximum possible coverage is equal to or greater than the number of remaining blocks,
+terminate the search path and compare with existing final results
+
+== Time Complexity
+
+Each search path is O(B) in the worst case. At each block, there is a binary search in a constant number of
+encountered configurations, which essential takes O(c) time. Though the branching factor P+1 seems to lead to exponential
+search complexity, the number of distinct configurations per block is bounded by the number of ranks of the hashed
+forces coverage, which has a maximum of the weighted sum of the patrol lengths multiplied by the corresponding number of
+forces per block. If this value is viewed as constant for a small F, the tree search time complexity is bounded by
+O(B). Otherwise, the time complexity can be up to O(B^2) given F is also O(B).
+
+== Space Complexity
+
+If the tree traversal uses BFS based on a queue, the queue size may grow exponentially in O((P+1)^B) regardless
+of overlapped configurations. Instead, using a stack based DFS only takes O(B) space complexity since at each block,
+only a constant number of branches are pushed to the stack.
+
+On the other hand, the coverage threat map takes O(B(c+1)^P) storage in the worst case where c is the average
+number of forces per patrol type. Fortunately, only the hashed coverage size is needed, which has a maximum of the
+weighted sum of the patrol lengths multiplied by the corresponding number of forces per block. If this is viewed
+as constant for the given F. The space complexity for the coverage map is O(B). The overall space complexity is still
+O(B).

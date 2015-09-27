@@ -1,0 +1,10 @@
+5
+bake,apple pie
+bake,bread
+bake, cherry pie
+buy,apples,Gold delicious
+buy,apples,Red Delicious
+3
+aa
+baker
+bu

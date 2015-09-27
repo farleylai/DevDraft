@@ -1,0 +1,24 @@
+5 22
+logon 646 12
+logon 594 8
+logon 801 4
+logon 846 20
+logon 334 19
+logon 290 16
+logon 90 2
+logon 132 19
+logon 600 19
+logon 196 4
+logon 356 6
+logon 396 9
+logon 52 13
+logon 328 20
+logon 167 9
+logon 76 4
+logon 381 1
+logon 413 18
+logon 782 1
+logon 335 7
+logon 360 8
+logon 742 21
+11 26 0

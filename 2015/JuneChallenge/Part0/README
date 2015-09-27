@@ -1,0 +1,18 @@
+=== Solution Analsysis
+
+First, this problem can be modeled as a maximum matching problem. Let the minions be the right set of nodes. Those possible hit damages are the left set of nodes, namely, { X, X-Y, X-2Y, ... }. An edge links a damage node to a minion if the minion's HP is equal to or less than the damage. Since a hit damage can only kill at most one minion, the maximum number of matchings is the solution.
+
+However, the possible number of hit damage nodes can be very large when X = 10000 and Y = 1 such that the maximum matching cannot be computed efficiently. On the other hand, since N is small, it is efficient to simply track the least hit damage to kill a minion. The least hit damage is indexed by the multiple of Y meaning the least damage to kill the minion is X - the multiple of Y. For example, if a minion's HP is less than X - Y and greater than X - 2Y, its least hit damage is indexed by 1. In this way, each minion is indexed by its corresponding least hit damage. Minions with HP > X are not counted. Then the solution considers the minions to kill in the descending hit indexes since if a minion can be killed by its least hit damage, it can also be killed by higher hit damage. Thus, the optimality is ensured. If there is a gap between two consecutive least hit indexes, those available hits in the gap can kill the remaining unkilled minions accumulated so far. If the smallest least hit index is greater than 0, those available hits from 0 to this index are taken into account to kill as many remaining minions as possible.
+
+Moreover, the following special cases are also handled by the solution.
+1. Minion HP <= 0: By definition, the minion is dead and not counted as killed.
+2. N <= 0: No input to process.
+3. Y < 0: Whether X <= 0 or not, some minions may be killed due to increasing damages of negative Y. The solution considers this case by setting the maximum possible damage to X and Y to -Y such that the algorithm still works.
+
+==== Time Complexity
+
+The algorithm computes the solution in O(NlogN) in the worst case if N is large since a TreeMap is used to store the minions indexed by the least hit damage in a sorted order. Nonetheless, given N is small, the time complexity can be viewed as constant.
+
+==== Space Complexity
+
+The size of the map and list used in the solution is at most N. Thus the space complexity is O(N) and can be viewed as constant for a small N.

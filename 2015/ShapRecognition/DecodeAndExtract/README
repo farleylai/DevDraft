@@ -1,0 +1,34 @@
+Solution Analysis
+
+Since the input size is limited, it is possible to read all at once and access the header randomly.
+
+Relevant header field offsets are define as follows.
+public static final int OFF_PIX_ARRAY = 0xA;    // pixel array start offset
+public static final int OFF_PIX_WIDTH = 0x12;   // image width in pixels
+public static final int OFF_PIX_HEIGHT = 0x16;  // image height in pixels
+public static final int OFF_PIX_BITS = 0x1C;    // bits per pixel
+
+To begin with, read the entire hex string and follow the procedure to extract the pixels in B/W.
+1. read the pixel width at 0x12
+2. read the pixel height at 0x16
+3. read bits per pixel at 0x1C
+4. read pixel array offset start at 0xA
+5. read pixels per row starting at the corresponding array offset
+
+Each pixel is stored in a 2D char array. The computation should be linear in terms of the number of pixels.
+
+Time Complexity
+
+It takes O(n) to read the entire input where n is the length of the input hex string.
+It takes constant time O(c) to get header information.
+Reading pixels takes O(hw) to fill the 2D image char array, where w is the image width and h is the image height.
+Therefore, the time complexity is O(n) where n >= wh.
+
+Space Complexity
+
+The storage of the entire image is O(wh) chars in Java, where w is the image width and h is the image height.
+A string of length O(n) is used to store the entire input hex string, where n is the length of the input hex string.
+Therefore, the space complexity is O(n) where n >= wh.
+
+If the input image size is large, only necessary header information needs to be stored by randomly accessing the input stream.
+In this case, the space complexity is O(wh) for storing the image.

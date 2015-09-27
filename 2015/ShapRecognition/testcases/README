@@ -1,0 +1,11 @@
+The "images" folder has the images that form the example test cases.
+
+The "hex" folder has the hex dumps of the images. These would be the inputs for "Decode and Extract". Make sure to test your code using the Compile & Test feature on the site before submitting; this will ensure that your code runs correctly in our environment.
+
+The "decode_output" folder has the correct outputs for the "Decode and Extract" portion of the challenge.
+
+The correct outputs for the "Name that shape" portion of the challenge is just the name of the shape, which is contained in the file names (circle, square, or triangle).
+
+Thanks for participating!
+
+-- DevDraft team

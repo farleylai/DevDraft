@@ -1,0 +1,9 @@
+100 7
+Monday 8:00-10:00, Monday 12:00-15:00, Tuesday 9:00-11:00, Tuesday 11:30-16:00, Wednesday 10:00-15:46
+Monday 9:15-11:00, Tuesday 12:00-17:00, Thursday 10:00-12:00, Friday 10:00-12:00
+Wednesday 11:00-18:00, Thursday 11:00-16:00
+Tuesday 14:30-16:30, Wednesday 8:00-20:00, Friday 13:00-14:00
+Tuesday 8:00-10:00, Wednesday 15:00-17:00, Thursday 8:00-10:00
+Wednesday 14:00-16:08
+Tuesday 11:00-15:00, Thursday 10:00-12:00
+4

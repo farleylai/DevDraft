@@ -1,0 +1,20 @@
+5
+ bake ,apple pie
+  bake,bread
+Bake , cherry pie
+Buy,apples,Gold delicious
+buy, Apples,Red Delicious
+3
+aa
+baker
+bu
+
+Expected::
+Bake,apple pie,Apples
+Bake
+buy,Bake,bread
+
+Actual::
+bake ,apples,apple pie, apples
+bake
+buy,bread,bake

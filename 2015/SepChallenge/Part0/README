@@ -1,0 +1,27 @@
+== Solution Analysis
+
+Assume the swap list may contain illegal indexes.
+If there is no compound formed due to a swap, the workbench is rolled back.
+For each swap index, check if there is one or more compounds formed to remove.
+The workbench range to check is constant. Say, if the swap position is pos, 
+only the range from pos-2 to pos+1 needs to be checked against known compounds.
+
+To verify if there is any compound formed for a given prefix crystal, 
+a dictionary is built for each compound prefix crystal. Given the range to check,
+simply look up in the dictionary for each three consecutive crystals in the range.
+If there is at least one matched compound, the swap is legal. The procedure continues
+until the end of the swap list while removing compounds once formed.
+
+== Time Complexity
+
+The solution takes O(n) in terms of the length of the swap list. For each swap, 
+the range to check takes constant time because the range size is constant and 
+the time to look up a constant number compounds in the dictionary is also
+constant. If there is no compound formed, to roll back the swap is also O(c).
+Therefore, the time complexity of the solution is O(n).
+
+== Space Complexity
+
+The space complexity is O(n) in terms of the initial workbench size.
+The dictionary index takes a constant size in view of the number of compounds.
+Hence, the solution is efficient in space usage.

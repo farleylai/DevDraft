@@ -1,0 +1,16 @@
+Solution Analysis
+===
+
+The algorithm is basically a depth-first tree search at the root of the starting stop. To facilitate the route trace, we need a Train class that checks if a stop reachable and the fare to the next stop, and of course a TripPlanner class that find the best route given the input train lines. Internally, the TripPlanner maintain the information of routes. A Route class tracks the current stop, the accumulated fare, the previous route and the route length so far for back tracking if necessary. Given a train, if the train allows to take to the next stop from the current stop, a new route to the next stop is returned.
+
+Next, I will describe the entire procedure to derive the solution. To search to route in a depth-first fashion, a stack is used traditionally. First, push the starting stop as the root route. Subsequently enter a while loop and pop the stack one at a time util the stack is empty. For each popped route, checks the trains if it's possible to take to the next stop. If possible and better than the current best, push the new route to the stack. Otherwise, no next stop simply means the route reaches the destination and the route is set to the best if better than the current one in terms of the fares and route lengths. Since depth-first search is used and a route is evaluated before pushed to the stack, the algorithm practices prune and search to eliminate impossible routes early and save time as well as space.
+
+Time Complexity
+===
+
+In the worst case, the the best route is discovered finally. The time complexity is simply the size of the depth-first search tree which is n^|trains| where n is the number of distinct stops and |trains| is the number of trains. However, with prune and search, a constant fact reduction is expected.
+
+Space Complexity
+===
+
+In the worst case, the the best route is discovered finally. The time complexity is simply the size of the depth-first search tree which is n^|trains| where n is the number of distinct stops and |trains| is the number of trains. However, with prune and search, a constant fact reduction is expected.

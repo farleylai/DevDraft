@@ -1,0 +1,11 @@
+Solution Analysis
+
+To recognize the shape in the input image, the idea is to prepare for the pattern shapes for later comparison. For a given image, compute the bounds of the shape in the image and resize the pixels within the bounds up to the size of a pattern shape image. The resize() procedure is similar to bilinear interpolation of the corresponding pixels. As long as there is a corresponding black pixel, the resized pixel is set to black. In this way, the final step is to compare the resized shape image with the three prepared pattern shape images. The score is computed based on the similarity, namely, how many pixels are the same as the pattern shape image. The shape with the highest score is the conclusion.
+
+Time Complexity
+
+The entire procedure processes and compares pixel by pixel in constant times. Take the larger image size between the input image and a pattern image. The time complexity is O(wh) where w is the width of the image and h is the height of the image. Therefore, the efficiency scales linearly with the number of pixels in the image.
+
+Space Complexity
+
+The entire procedure stores the pattern shapes, an input image and a resized input image one at a time. Take the larger image size between the images. The space complexity is O(wh) pixels where w is the width of the image and h is the height of the image.

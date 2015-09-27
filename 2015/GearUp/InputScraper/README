@@ -1,0 +1,20 @@
+Solution Analysis
+
+By observation, an input line follows the format where there are two weekdays and two times specifying the interval in order. The idea is to capture the day and time tokens by matching the date time format as follows.
+
+1. For each line, scan one token at a time.
+2. For each token, trailing [.,s] can be removed for ease of matching or parsing.
+3. If the token has "-" or ":", it specifies the time of the interval. The first appearance indicates the beginning and the second indicates the end.
+4. Otherwise, the token may be identified as a weekday by matching its prefix.
+
+Since the interval ranges from 8a to 20p, simply add 12 to the hour if it is out of range. A.M. or P.M. should not be a concern.
+
+Time Complexity
+
+The parsing takes one pass for each line.
+For each line, each token is parsed once.
+If there are n lines and O(c) tokens per line where c is some constant, the running time is O(nc).
+
+Space Complexity
+
+The schedule is a list of intervals, each of which stores the day enum, two integer hours and two integer minutes for 20 bytes. The size of the list is up to n given n input entries. Therefore, the space complexity is O(n).

@@ -1,0 +1,16 @@
+What was wrong?
+===
+
+In ShippingCalculator.calculateShipping(), the first condition zipCode >= 75000 is wrong.
+It should be zipCode > 75000 according to what the business rule "higher" means.
+
+Bad Practices
+===
+1.) Test cases do not cover the boundary conditions sufficiently such that potential bugs are missed as follows.
+2.) The state name may not be captialized like "oregon," the string comparison in TaxCalculator.calculateTax() should compare in full upper or lower cases.
+3.) The Address class does not parse the address string in general considering possible user input. For example, addresses with the second line would get into trouble. Moreover, what if the street number also contains exactly 5 digits? Anyhow, I recommend to rewrite the address parsing in regular expressions to recognize the state name and zip code particularly if no other fields are of interest. Alternatively, storing the recognized fields respectively saves time to recompute if some address fields are needed repeatedly.
+4.) Within the scope of the test cases, the static methods of ShippingCalculator and TaxCalculator had better be moved to CostCalculator for simplicity.
+5.) The addressLine in class Address should be private to make an Address object read only in case of unexpected modifications.
+6.) The IOException thrown in main() may be OK for this unit test but should be handled in production code.
+7.) Business logics should remain hidden from clients.
+8.) integer multiplications should precede divisions in case of losing precision.

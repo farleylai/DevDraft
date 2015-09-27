@@ -1,0 +1,57 @@
+== System Design
+
+The search system::
+
+The relations between user, tags and notes can be represented as a three layer graph. Users as the nodes in the base
+layer. The second layer consists of the tags while the third layer contains the notes. There are edges between users and
+the tags submitted by them. The edges between tags and notes denote the association.
+
+Since the graph may grow exponentially large over time. The storage may be distributed across machines per layer. Each
+layer grows from one machine to multiple machines. So essentially, one way is to build a cluster for users, a cluster
+for tags and a cluster for notes. Each cluster manages their own data consistency. The edge relations can be resolved
+by universal hash functions such that on a user query, the front end server extracts relevant tags and relay the query
+to the tag cluster to search for the tagged notes. The tag servers report the tagged notes according to some hash
+functions and the links to the note cluster if the notes are retrieved later.
+
+If the notes shown need to be ordered by relevance, some backend machine learning model may be used in terms of the user
+tag history and note content. For example, the extracted tags once submitted by the user may deserve higher relevance.
+The notes highly similar to those uploaded or tagged by the user should be more relevant. Some notes tagged by an
+exceptionally large number of users may be highly recommended. The machine learning model should be trained in batches
+periodically while applied in real-time. Popular cloud computing infrastructures such as the Spark dataflow allows to
+support distributed storage and real-time queries.
+
+In this way, the personal organizer app should remain regardless of the scaling of the system. Nonetheless, computing
+real-time tag suggestions may be time-consuming. The backend should collect common input tag prefixes and build indexes using
+the trie structure to report tag suggestions in real-time. If not cached locally or the indexes are unavailable, just wait for
+the user input to complete and be submitted. In the future, the system may take collaborative editing into consideration. 
+Also, capturing the interactions between users can be useful to improve the recommendations.
+
+== Parallel Solution
+
+Yes, the search problem should benefit from parallel computation speedup. The parallelization may follow the approach
+below.
+
+1. One machine is responsible for computing all the configurations with respect to one block. O(B) machines are needed
+2. Some blocks contributing to lower workload can be merged and assigned to one single machine
+3. If some block workload is too heavy, the configurations may be partitioned and redistributed to multiple machines
+
+The parallel algorithm is straightforward by modifying the original sequential one as follows
+
+1. Each machine has a respective stack to receive configurations pushed from other upstream machines
+2. The root machine does not need the stack but only push configurations downstream
+3. Machines receiving all the pushed configurations start processing, pruning and pushing new configurations downstream
+4. The final downstream machine collect the resulting configurations and report the minimum threat level
+
+The computation will converge block by block. Popular cloud computing infrastruture such as Map Reduce and Spark should
+be able to support this parallel version.
+
+== Feedback
+
+1. FAQ for each part which is updated promptly
+2. It might be unfair if the execution time is a hard limit regardless of the programming languages. The performance
+   between C/C++ and scripting languages can be up to 100X even when implementing the same algorithm. For algorithmic
+   problem solving, scripting language implementations time out easily within 2s execution such that only small size
+   test cases will be passed. Some execution time allowance per language would make sense.
+3. So far, the fastest execution of groovy script is by GroovyServ. The speedup can be up to 10X.
+4. The hardest part may not be writing the code but figuring out corner cases to verify which is time consuming. A
+   larger test set should be welcome.

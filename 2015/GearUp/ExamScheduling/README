@@ -1,0 +1,20 @@
+Solution Analysis
+
+The interval format in each schedule is fixed and easy to parse for each line. To figure out the maximum number of students available, the intervals are divided into 15-min timeslots which are accumulated for each student's schedule. Though the duration of the timeslot can be smaller for better accuracy, it is unlikely to make a common schedule beginning with start time not on the dot. The procedure follows. 
+
+1. For each line, scan intervals one at time and parse the day, start time and end time.
+2. Accumulate the timeslots corresponding to the intervals.
+3. Find the maximum number of students available in the exam duration.
+3.1 Search in sliding windows in the number of timeslots of the duration from Mon. to Fri.
+3.2 The minimum count in a sliding window of timeslots is the number of students available.
+3.3 The maximum number of students available is the maximum count in all the sliding windows.
+
+Since the interval ranges from 8a to 20p, there are 12*4=48 timeslots a day and 8*48=384 timeslots a week. An array of int[384] is sufficient to compute the statistics.
+
+Time Complexity
+
+The available timeslot counts can be computed in one pass, namely, linear time of the sum of all the students' schedule intervals. To find out the maximum number of students available, the available number of students is computed in sliding windows which is also linear of the total number of timeslots. Therefore, assume the sum of total intervals in one week is T and the timeslot is of size t, the running time is O(T/t).
+
+Space Complexity
+
+Assume the sum of total intervals in one week is T and the timeslot is of size t. An int array of size O(T/t) is necessary to keep track of the counts for each timeslot. Thus, the space complexity is O(T/t).

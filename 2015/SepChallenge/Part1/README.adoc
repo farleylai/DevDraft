@@ -44,8 +44,6 @@ A recursive search algorithm is simple to code but on a large input, it is likel
 exponential search space. Hence, the submitted version is iterative and traverses the search tree using a stack. The
 procedure is as follows.
 
-[source]
---
 . Read B, T, P, and F from stdin where F is a map from patrol length to force numbers
 . Push the initial configuration (block=0, forces=F.values(), threats=0) to a stack
 . while(!stack.isEmpty())
@@ -53,7 +51,6 @@ procedure is as follows.
 .. Prune the configuration in terms of the coverage rank and the carried threats
 .. If not pruned, push the next configurations at the advanced block to the stack for each possible deployment of force types
 . Return and print the final minimum carried threat levels at B~th~ block
---
 
 === Optimizations
 
